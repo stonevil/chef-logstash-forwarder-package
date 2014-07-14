@@ -16,6 +16,9 @@ describe 'logstash-forwarder-package::default' do
   it 'install chef package fpm' do
     expect(chef_run).to install_chef_gem('fpm')
   end
+  it 'remove package logstash-forwarder' do
+    expect(chef_run).to remove_package('logstash-forwarder')
+  end
   it 'delete a folder' do
     expect(chef_run).to_not delete_directory("#{Chef::Config['file_cache_path']}/logstash-forwarder")
   end
@@ -23,6 +26,7 @@ describe 'logstash-forwarder-package::default' do
   it 'sync a git' do
     expect(chef_run).to sync_git("#{Chef::Config['file_cache_path']}/logstash-forwarder").with(repository: 'https://github.com/elasticsearch/logstash-forwarder.git')
   end
+
 end
 
 at_exit { ChefSpec::Coverage.report! }
